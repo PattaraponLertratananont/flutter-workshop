@@ -9,6 +9,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +24,19 @@ class _LoginScreenState extends State<LoginScreen> {
             key: formKey,
             child: Column(
               children: [
-                UsernameInput(),
-                PasswordInput(),
-                ElevatedButton(
-                  onPressed: onLogin,
-                  child: Text("Login"),
+                UsernameInput(controller: usernameController),
+                Container(
+                  constraints: BoxConstraints(
+                    minHeight: 100,
+                  ),
+                  child: PasswordInput(controller: passwordController),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 16),
+                  child: ElevatedButton(
+                    onPressed: onLogin,
+                    child: Text("Login"),
+                  ),
                 ),
               ],
             ),
@@ -40,17 +50,22 @@ class _LoginScreenState extends State<LoginScreen> {
     FocusScope.of(context).unfocus();
     if (!formKey.currentState!.validate()) return;
     print("SUCCESS");
+    print(usernameController.text);
+    print(passwordController.text);
   }
 }
 
 class PasswordInput extends StatelessWidget {
+  final TextEditingController controller;
   const PasswordInput({
+    required this.controller,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         label: Text("Password"),
         hintText: "Password",
@@ -67,13 +82,16 @@ class PasswordInput extends StatelessWidget {
 }
 
 class UsernameInput extends StatelessWidget {
+  final TextEditingController controller;
   const UsernameInput({
+    required this.controller,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       cursorColor: Colors.red,
       style: TextStyle(color: Colors.blue),
       decoration: InputDecoration(
