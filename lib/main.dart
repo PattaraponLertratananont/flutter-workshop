@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'modules/login/screen.dart';
+import 'modules/profile/screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,16 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: PageView(
+        allowImplicitScrolling: true,
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          LoginScreen(),
-          Container(
-            color: Colors.red[300],
-            child: const Center(
-              child: Text("PROFILE"),
-            ),
-          ),
+          LoginScreen(), // index 0
+          ProfileScreen(), // index 1
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -68,10 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (index) {
           setState(() {
             currentIndex = index;
-            pageController.animateToPage(
+            pageController.jumpToPage(
               currentIndex,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeIn,
+              // duration: const Duration(milliseconds: 300),
+              // curve: Curves.easeIn,
             );
           });
         },
