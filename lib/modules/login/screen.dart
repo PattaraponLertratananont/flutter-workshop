@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_exam/modules/login/service.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -50,8 +51,19 @@ class _LoginScreenState extends State<LoginScreen> {
     FocusScope.of(context).unfocus();
     if (!formKey.currentState!.validate()) return;
     print("SUCCESS");
-    print(usernameController.text);
-    print(passwordController.text);
+    var service = LoginService();
+    service
+        .getUserProfile(usernameController.text, passwordController.text)
+        .then((profile) {
+      print(profile.toJson());
+    }).catchError((err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("ERROR"),
+        ),
+      );
+    });
   }
 }
 
