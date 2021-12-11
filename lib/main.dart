@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'login.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -42,12 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          Container(
-            color: Colors.red[200],
-            child: const Center(
-              child: Text("LOGIN"),
-            ),
-          ),
+          LoginScreen(),
           Container(
             color: Colors.red[300],
             child: const Center(
@@ -73,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
             currentIndex = index;
             pageController.animateToPage(
               currentIndex,
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeIn,
             );
           });
