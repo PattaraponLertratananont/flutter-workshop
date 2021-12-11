@@ -29,16 +29,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int currrentIndex = 0;
+  int currentIndex = 0;
+  final pageController = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(),
+      body: PageView(
+        controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          Container(
+            color: Colors.red[200],
+            child: const Center(
+              child: Text("LOGIN"),
+            ),
+          ),
+          Container(
+            color: Colors.red[300],
+            child: const Center(
+              child: Text("PROFILE"),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currrentIndex,
+        currentIndex: currentIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.lock),
@@ -51,7 +70,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         onTap: (index) {
           setState(() {
-            currrentIndex = index;
+            currentIndex = index;
+            pageController.animateToPage(
+              currentIndex,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeIn,
+            );
           });
         },
       ),
